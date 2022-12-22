@@ -12,11 +12,13 @@ class SecondSectionState {
   }
 
   alertAnything() {
-    alert(this.text);
+    if (this.text) {
+      alert(this.text);
+    }
   }
 
   alertNumber() {
-    if (Number.isInteger(+this.text)) {
+    if (Number.isInteger(+this.text) && this.text) {
       alert(this.text);
     }
   }
