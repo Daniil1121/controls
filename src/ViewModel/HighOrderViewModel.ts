@@ -15,8 +15,8 @@ class HighOrderViewModel {
     makeAutoObservable(this);
   }
 
-  setText = () => {
-    this.helloViewModel?.onChange(this.alertViewModel?.text || "");
+  setTextinHelloWorldViewModel = () => {
+    this.helloViewModel?.onChangeText(this.alertViewModel?.text || "");
   };
 }
 

@@ -3,13 +3,15 @@ import { IAlertControlViewModel } from "../ViewModel/AlertControlViewModel";
 import { observer } from "mobx-react-lite";
 
 const AlertControlView: React.FC<
-  IAlertControlViewModel & { setText: (str: string) => void }
+  IAlertControlViewModel & {
+    setTextinHelloWorldViewModel: (str: string) => void;
+  }
 > = observer(
   ({
     state,
-    setText,
+    setTextinHelloWorldViewModel,
   }: IAlertControlViewModel & {
-    setText: (str: string) => void;
+    setTextinHelloWorldViewModel: (str: string) => void;
   }): React.ReactElement => {
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
       state.onChangeText(e.target.value);
@@ -23,6 +25,10 @@ const AlertControlView: React.FC<
       state.alertOnlyNumber();
     };
 
+    const setTextinHelloWorldViewModelHandler = () => {
+      setTextinHelloWorldViewModel(state.text);
+    };
+
     return (
       <div className="section">
         <button onClick={alertNumberHandler} className="btn">
@@ -34,7 +40,7 @@ const AlertControlView: React.FC<
         </button>
         <button
           className="btn btn--secondary"
-          onClick={() => setText(state.text)}
+          onClick={setTextinHelloWorldViewModelHandler}
         >
           Test
         </button>

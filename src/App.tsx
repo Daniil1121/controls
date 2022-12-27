@@ -28,7 +28,9 @@ function App() {
       </section>
       <section>
         <AlertControlView
-          setText={highOrderViewModel.setText}
+          setTextinHelloWorldViewModel={
+            highOrderViewModel.setTextinHelloWorldViewModel
+          }
           state={alertControlViewModel}
         />
       </section>
