@@ -1,19 +1,19 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
-import { IFirstSectionState } from "../store/FirstSectionState";
+import { IHelloWorldControlViewModel } from "../ViewModel/HelloWorldControlViewModel";
 
-const FirstSection: React.FC<IFirstSectionState> = observer(
-  ({ state }: IFirstSectionState): React.ReactElement => {
+const HelloWorldControlView: React.FC<IHelloWorldControlViewModel> = observer(
+  ({ state }: IHelloWorldControlViewModel): React.ReactElement => {
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-      state.onChange(e.target.value);
+      state.onChangeText(e.target.value);
     };
 
     const printHelloWord = () => {
-      state.print();
+      state.printHelloWorld();
     };
 
     const clearHandler = () => {
-      state.clear();
+      state.deleteText();
     };
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -77,4 +77,4 @@ const FirstSection: React.FC<IFirstSectionState> = observer(
   }
 );
 
-export default FirstSection;
+export default HelloWorldControlView;

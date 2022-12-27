@@ -1,31 +1,31 @@
 import { makeAutoObservable } from "mobx";
 
-class SecondSectionState {
+class AlertControlViewModel {
   constructor() {
     makeAutoObservable(this);
   }
 
   text = "";
 
-  onChange(str: string) {
+  onChangeText(str: string) {
     this.text = str;
   }
 
-  alertAnything() {
+  alertAnythingText() {
     if (this.text) {
       alert(this.text);
     }
   }
 
-  alertNumber() {
+  alertOnlyNumber() {
     if (Number.isInteger(+this.text) && this.text) {
       alert(this.text);
     }
   }
 }
 
-export default SecondSectionState;
+export default AlertControlViewModel;
 
-export interface ISecondSectionState {
-  state: SecondSectionState;
+export interface IAlertControlViewModel {
+  state: AlertControlViewModel;
 }

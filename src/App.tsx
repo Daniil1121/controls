@@ -1,31 +1,42 @@
 import "./App.css";
-import FirstSection from "./components/FirstSection";
-import SecondSection from "./components/SecondSection";
-import ThirdSection from "./components/ThirdSection";
-import FirstSectionState from "./store/FirstSectionState";
-import FourthSectionState from "./store/FourthSectionState";
-import SecondSectionState from "./store/SecondSectionState";
-import ThirdSectionState from "./store/ThirdSectionState";
+import HelloWorldControlView from "./View/HelloWorldControlView";
+import AlertControlView from "./View/AlertControlView";
+import AutocompleteControl from "./View/AutocompleteControlView";
+import HelloWorldControlViewModel from "./ViewModel/HelloWorldControlViewModel";
+import AlertControlViewModel from "./ViewModel/AlertControlViewModel";
+import AutocompleteControlViewModel from "./ViewModel/AutocompleteControlViewModel";
+import HighOrderViewModel from "./ViewModel/HighOrderViewModel";
 
-const firstSectionState: FirstSectionState = new FirstSectionState();
-const secondSectionState: SecondSectionState = new SecondSectionState();
-const thirdSectionState: ThirdSectionState = new ThirdSectionState();
-const fourthSectionState: FourthSectionState = new FourthSectionState();
+const helloWorldControlViewModel: HelloWorldControlViewModel =
+  new HelloWorldControlViewModel();
+const alertControlViewModel: AlertControlViewModel =
+  new AlertControlViewModel();
+const autocompleteControlViewModel: AutocompleteControlViewModel =
+  new AutocompleteControlViewModel(10);
+const autocompleteControlViewModelSmall: AutocompleteControlViewModel =
+  new AutocompleteControlViewModel(3);
+const highOrderViewModel: HighOrderViewModel = new HighOrderViewModel(
+  helloWorldControlViewModel,
+  alertControlViewModel
+);
 
 function App() {
   return (
     <>
       <section>
-        <FirstSection state={firstSectionState} />
+        <HelloWorldControlView state={helloWorldControlViewModel} />
       </section>
       <section>
-        <SecondSection state={secondSectionState} />
+        <AlertControlView
+          setText={highOrderViewModel.setText}
+          state={alertControlViewModel}
+        />
       </section>
       <section>
-        <ThirdSection state={thirdSectionState} />
+        <AutocompleteControl state={autocompleteControlViewModel} />
       </section>
       <section>
-        <ThirdSection state={fourthSectionState} />
+        <AutocompleteControl state={autocompleteControlViewModelSmall} />
       </section>
     </>
   );

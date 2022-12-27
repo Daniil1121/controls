@@ -1,24 +1,31 @@
 import { makeAutoObservable, action } from "mobx";
 import { CountryInfo, getCountryByName } from "../api/apiService";
+import { delay } from "../services/delay";
 
-class ThirdSectionState {
-  maxCountHints = 10;
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
+class AutocompleteControlViewModel {
+  maxCountHints = 0;
   countryArr: CountryInfo[] = [];
   reqStr = "";
   error = "";
-  countHints = this.maxCountHints;
+  countHints = 0;
 
-  private fetchCountry() {
+  constructor(count: number) {
+    makeAutoObservable(this);
+    this.maxCountHints = count;
+    this.countHints = count;
+  }
+
+  private async fetchCountry(str: string) {
     this.error = "";
     this.countryArr = [];
+    // задержка запроса и сравнение для выхода из функции, если за время задержки изменилась искомая строка
+    await delay(500);
+    if (str !== this.reqStr) return;
     getCountryByName(this.reqStr)
       .then(
         action("fetchSuccess", (res: CountryInfo[]) => {
+          // сверка, не изменилась ли искомая строка за время ожидания. Если изменилась - return
+          if (str !== this.reqStr) return;
           this.countryArr = res
             .slice(0, this.countHints)
             .filter((el) => el.name && el.flag && el.fullName)
@@ -37,9 +44,13 @@ class ThirdSectionState {
       );
   }
 
-  onChange(str: string) {
+  onChangeText(str: string) {
     this.reqStr = str;
-    this.fetchCountry();
+    if (!str.length) {
+      this.countryArr = [];
+      return;
+    }
+    this.fetchCountry(str);
   }
 
   setCountry(str: string) {
@@ -49,12 +60,12 @@ class ThirdSectionState {
 
   setCountHints(val: string) {
     this.countHints = +val;
-    this.fetchCountry();
+    this.fetchCountry(this.reqStr);
   }
 }
 
-export default ThirdSectionState;
+export default AutocompleteControlViewModel;
 
-export interface IThirdSectionState {
-  state: ThirdSectionState;
+export interface IAutocompleteControlViewModel {
+  state: AutocompleteControlViewModel;
 }
