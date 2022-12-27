@@ -42,7 +42,7 @@ const AlertControlView: React.FC<
           className="btn btn--secondary"
           onClick={setTextinHelloWorldViewModelHandler}
         >
-          Test
+          Транслировать текст в другой контрол
         </button>
       </div>
     );
